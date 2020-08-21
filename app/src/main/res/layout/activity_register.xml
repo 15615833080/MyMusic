@@ -27,11 +27,11 @@
         app:srcCompat="@mipmap/logo" />
 
     <com.example.mymusic.mvp.view.views.InputView
-        android:id="@+id/login_phone"
+        android:id="@+id/register_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        app:input_hint="手机号"
+        app:input_hint="请输入手机号"
         app:input_icon="@mipmap/phone"
         app:is_password="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,14 +46,14 @@
         android:id="@+id/line1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_phone"
+        app:layout_constraintTop_toBottomOf="@+id/register_phone"
         app:layout_constraintVertical_bias="0.0"></View>
     <com.example.mymusic.mvp.view.views.InputView
-        android:id="@+id/login_passwod"
+        android:id="@+id/register_passwod"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        app:input_hint="密码"
+        app:input_hint="请输入密码"
         app:input_icon="@mipmap/phone"
         app:is_password="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,31 +67,42 @@
         android:id="@+id/line2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_passwod"
+        app:layout_constraintTop_toBottomOf="@+id/register_passwod"
         app:layout_constraintVertical_bias="0.0"></View>
 
+    <com.example.mymusic.mvp.view.views.InputView
+        android:id="@+id/register_passwod_again"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        app:input_hint="请再次输入密码"
+        app:input_icon="@mipmap/phone"
+        app:is_password="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.108"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line2">
+    </com.example.mymusic.mvp.view.views.InputView>
+
+    <View
+        style="@style/line"
+        android:id="@+id/line3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_passwod_again"
+        app:layout_constraintVertical_bias="0.0"></View>
     <Button
-        android:id="@+id/login_register"
+        android:id="@+id/register_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/marginSize"
         android:text="立即注册"
+        android:background="@drawable/btn_commit_select"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line2" />
 
-    <Button
-        android:id="@+id/login_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/marginSize"
-        android:layout_marginTop="@dimen/marginSize"
-        android:background="@drawable/btn_commit_select"
-        android:text="登录"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_register" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
