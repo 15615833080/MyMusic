@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.EncryptUtils;
 import com.blankj.utilcode.util.RegexUtils;
@@ -17,9 +16,8 @@ import com.example.mymusic.mvp.view.activity.LoginActivity;
 
 import java.util.List;
 
-import io.realm.Realm;
-
 public class UserUtils {
+    private static final String TAG = "UserUtils";
 
     /**
      * 验证登录用户
@@ -47,22 +45,24 @@ public class UserUtils {
             return false;
         }
         RealmHelp realmHelp = new RealmHelp();
-        boolean result = realmHelp.validateUser(phone,EncryptUtils.encryptMD5ToString(password));
-        realmHelp.close();
-        if(!result){
+        boolean result = realmHelp.validateUser(phone, EncryptUtils.encryptMD5ToString(password));
+        if (!result) {
             ToastUtils.showShort("账号与密码不一致，重新输入");
             return false;
         }
 
         //保存用户登录标记
         boolean isSave = SPUtils.saveUser(context, phone);
-        if(!isSave){
+        if (!isSave) {
             ToastUtils.showShort("系统错误，请稍后重试");
             return false;
         }
 
         //保存用户标记，在全局单例类中
         UserHelp.getInstance().setPhone(phone);
+        //保存音乐源
+        realmHelp.savaMusicModel(context);
+        realmHelp.close();
         return true;
     }
 
@@ -72,12 +72,55 @@ public class UserUtils {
      * @param context
      */
     public static void logout(Context context) {
+        //删除SP中的标记
+        boolean result = SPUtils.logout(context);
+        if (!result) {
+            ToastUtils.showShort("系统错误，请稍后重试");
+            return;
+        }
+        RealmHelp realmHelp = new RealmHelp();
+        realmHelp.removeMusicModel(context);
+        realmHelp.close();
         Intent intent = new Intent(context, LoginActivity.class);
         //        添加intent标志符，清理task栈，并且新生成一个task栈
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         //定义动画
         ((Activity) context).overridePendingTransition(R.anim.open_enter, R.anim.open_exit);
+
+    }
+    /**
+     * 对输入的密码进行验证
+     *
+     * @param context
+     * @param oldPassword
+     * @param newPassword
+     * @param confirmPassword
+     * @return
+     */
+    public static boolean checkUpdatePassword(Context context, String oldPassword, String newPassword, String confirmPassword) {
+        if (TextUtils.isEmpty(oldPassword)) {
+            ToastUtils.showShort("请输入原密码");
+            return false;
+        }
+        if (TextUtils.isEmpty(newPassword) || !TextUtils.equals(newPassword, confirmPassword)) {
+            ToastUtils.showShort("请确认密码");
+            return false;
+        }
+        RealmHelp realmHelp = new RealmHelp();
+        UserModel model = realmHelp.getUser();
+        if (!model.getPassword().equals(EncryptUtils.encryptMD5ToString(newPassword))) {
+            ToastUtils.showShort("与原密码不一致，请检查");
+            return false;
+        }
+        boolean result = realmHelp.updataPassword(EncryptUtils.encryptMD5ToString(newPassword));
+        if(!result){
+            ToastUtils.showShort("系统错误，请重试");
+        }
+        ToastUtils.showShort("修改密码成功");
+        realmHelp.close();
+        return result;
+
     }
 
     /**
@@ -131,12 +174,15 @@ public class UserUtils {
         realmHelp.close();
         return result;
     }
+
     /**
      * 验证是否存在已登录用户
      */
-    public static boolean validateUserLogin(Context context){
+    public static boolean validateUserLogin(Context context) {
         return SPUtils.isLoginUser(context);
     }
+
+
 
     /**
      * 保存用户到数据库

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
+import com.example.mymusic.helps.UserHelp;
 import com.example.mymusic.utils.UserUtils;
 
 import butterknife.BindView;
@@ -37,6 +38,7 @@ public class MeActivity extends BaseActivity {
 
     private void init() {
         initNavBar(true, "个人中心", false);
+        tvUser.setText("当前用户：" + UserHelp.getInstance().getPhone());
     }
 
     @OnClick({R.id.refactor_password, R.id.person_check,R.id.logout})

@@ -1,6 +1,7 @@
 package com.example.mymusic.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.ActivityUtils;
+import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
+import com.example.mymusic.bean.AlbumBean;
+import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.mvp.view.activity.PlayMusicActivity;
+import com.example.mymusic.utils.Constant;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +30,8 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     private Context mContext;
     private View mItemView;
     private RecyclerView mRv;
+    private List<MusicBean> musicBeanList;
+    private AlbumBean albumBean;
     private boolean isCalcaulationRvHeight;
 
     public MusicListAdapter(Context context, RecyclerView recyclerView) {
@@ -39,19 +48,43 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        setRecyclerViewHeight();
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityUtils.startActivity(PlayMusicActivity.class);
-            }
-        });
+        if (musicBeanList != null) {
+            final MusicBean musicBean = musicBeanList.get(position);
+            Glide.with(mContext)
+                    .load(musicBean.getPoster())
+                    .into(holder.ivIcon);
+            holder.tvName.setText(musicBean.getName());
+            holder.tvAuthor.setText(musicBean.getAuthor());
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, PlayMusicActivity.class);
+                    intent.putExtra(Constant.MUSIC_ID, musicBean.getMusicId());
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return musicBeanList.size();
     }
+
+    /**
+     * update
+     */
+    public void update(List<MusicBean> musicBeanList) {
+        if (musicBeanList != null) {
+            this.musicBeanList = musicBeanList;
+        }
+    }
+
+/*    public void updateAlbum(AlbumBean albumBean) {
+        if (albumBean != null) {
+            this.albumBean = albumBean;
+        }
+    }*/
 
     /**
      * 1、获取ItemView的高度
@@ -85,6 +118,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
         @BindView(R.id.tv_author)
         TextView tvAuthor;
         View itemView;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

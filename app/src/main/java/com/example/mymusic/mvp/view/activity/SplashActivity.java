@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
 import com.example.mymusic.utils.LogUtils;
+import com.example.mymusic.utils.UserUtils;
 
 import java.lang.ref.WeakReference;
 
@@ -57,6 +58,7 @@ public class SplashActivity extends BaseActivity {
 
     public static class CountDownTimerHandler extends Handler{
         final WeakReference<SplashActivity> mWeakReference;
+        private SplashActivity activity;
 
         public CountDownTimerHandler(@NonNull Looper looper, SplashActivity activity) {
             super(looper);
@@ -66,7 +68,7 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
-            SplashActivity activity = mWeakReference.get();
+            activity = mWeakReference.get();
             switch (msg.what){
                 case CODE:
                     int time = msg.arg1;
@@ -78,13 +80,27 @@ public class SplashActivity extends BaseActivity {
                     if(time > 0){
                         sendMessageDelayed(message, 1000);
                     }else {
-                        message.arg2 = ARG_2;
-                        Intent intent = new Intent(activity, LoginActivity.class);
-                        activity.startActivity(intent);
-                        activity.finish();
+                        final boolean isLogin = UserUtils.validateUserLogin(activity);
+                        if(isLogin){
+                            toMian();
+                        }else {
+                            toLogin();
+                        }
                     }
                     break;
             }
+        }
+
+        private void toLogin() {
+            Intent intent = new Intent(activity, LoginActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
+        }
+
+        private void toMian() {
+            Intent intent = new Intent(activity, MainActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
         }
 
     }

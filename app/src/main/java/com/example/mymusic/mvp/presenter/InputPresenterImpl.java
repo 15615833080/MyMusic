@@ -7,10 +7,12 @@ import android.content.Intent;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.mymusic.mvp.view.activity.LoginActivity;
 import com.example.mymusic.mvp.view.activity.MainActivity;
+import com.example.mymusic.utils.LogUtils;
 import com.example.mymusic.utils.UserUtils;
 
 public class InputPresenterImpl implements InputPresenter {
 
+    private static final String TAG = "InputPresenterImpl";
     private Context mContext;
 
     public InputPresenterImpl(Context context) {
@@ -18,21 +20,31 @@ public class InputPresenterImpl implements InputPresenter {
     }
 
     @Override
-    public void handleInput(String phoneInput, String passwordInput) {
-        if(!UserUtils.validateLogin(mContext, phoneInput, passwordInput)){
+    public void handleInputLogin(String phoneInput, String passwordInput) {
+        if (!UserUtils.validateLogin(mContext, phoneInput, passwordInput)) {
             return;
-        }else {
+        } else {
             Intent intent = new Intent(mContext, MainActivity.class);
             mContext.startActivity(intent);
         }
     }
 
     @Override
-    public void handleInput(String phoneInput, String passwordInput, String confirmPassword) {
+    public void handleInputRegister(String phoneInput, String passwordInput, String confirmPassword) {
         boolean result = UserUtils.registerUser(mContext, phoneInput, passwordInput, confirmPassword);
+        if (!result) {
+            return;
+        }
+        ((Activity) mContext).onBackPressed();
+    }
+
+    @Override
+    public void handlerInputChangePassword(String oldPassword, String password, String confirmPassword) {
+        boolean result = UserUtils.checkUpdatePassword(mContext,oldPassword,password,confirmPassword);
+        LogUtils.d(TAG, "result" + result);
         if(!result){
             return;
         }
-        ((Activity)mContext).onBackPressed();
+        UserUtils.logout(mContext);
     }
 }

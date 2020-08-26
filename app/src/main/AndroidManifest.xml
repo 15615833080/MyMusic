@@ -2,16 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.mymusic">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.view.activity.PlayMusicActivity"></activity>
+        <service
+            android:name=".service.MusicService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".mvp.view.activity.PlayMusicActivity" />
         <activity android:name=".mvp.view.activity.AlbumListActivity" />
         <activity android:name=".mvp.view.activity.ChangePasswordActivity" />
         <activity android:name=".mvp.view.activity.MeActivity" />

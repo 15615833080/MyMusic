@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
 import com.example.mymusic.mvp.presenter.InputPresenterImpl;
 import com.example.mymusic.mvp.view.views.InputView;
-import com.example.mymusic.utils.UserUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,7 +52,8 @@ public class RegisterActivity extends BaseActivity {
                 String mPhone = registerPhone.getInputStr();
                 String mPassword = registerPasswod.getInputStr();
                 String mPasswordCconfirm = registerPasswodAgain.getInputStr();
-                inputPresenter.handleInput(mPhone, mPassword, mPasswordCconfirm);
+                inputPresenter.handleInputRegister(mPhone, mPassword, mPasswordCconfirm);
+                ToastUtils.showShort("注册成功");
                 break;
                 default:break;
         }

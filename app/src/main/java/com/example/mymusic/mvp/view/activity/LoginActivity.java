@@ -7,7 +7,6 @@ import android.widget.Button;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
-import com.example.mymusic.mvp.presenter.InputPresenter;
 import com.example.mymusic.mvp.presenter.InputPresenterImpl;
 import com.example.mymusic.mvp.view.views.InputView;
 import com.example.mymusic.utils.LogUtils;
@@ -32,13 +31,12 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        LogUtils.d(TAG, "DD");
         ButterKnife.bind(this);
         init();
     }
 
     /**
-     * 初始化View
+     * 初始化
      */
     private void init() {
         initNavBar(false, "登录", false);
@@ -49,7 +47,7 @@ public class LoginActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_login:
-                inputPresenter.handleInput(loginPhone.getInputStr(), loginPasswod.getInputStr());
+                inputPresenter.handleInputLogin(loginPhone.getInputStr(), loginPasswod.getInputStr());
                 break;
             case R.id.login_register:
                 ActivityUtils.startActivity(RegisterActivity.class);

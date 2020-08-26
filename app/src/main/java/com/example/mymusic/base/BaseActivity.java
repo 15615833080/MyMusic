@@ -8,16 +8,25 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mymusic.R;
+import com.example.mymusic.bean.AlbumBean;
+import com.example.mymusic.bean.MusicBean;
+import com.example.mymusic.bean.PlayListBean;
 import com.example.mymusic.mvp.presenter.InputPresenter;
 import com.example.mymusic.mvp.presenter.InputPresenterImpl;
 import com.example.mymusic.mvp.view.activity.MeActivity;
+import com.example.mymusic.mvp.view.activity.impl.ShowDataView;
+
+import java.util.List;
 
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener {
+public class BaseActivity extends AppCompatActivity implements View.OnClickListener, ShowDataView {
 
     private ImageView navBack, navMe;
     private TextView navTitle;
     public InputPresenter inputPresenter;
+    public boolean isAlbum;
+    public boolean isPlayList;
+    public boolean isMusic;
 
     /**
      * 初始化navBar
@@ -49,4 +58,30 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
+
+    @Override
+    public void updateAlbum(List<AlbumBean> albumBeanList) {
+
+    }
+
+    @Override
+    public void updateHot(List<MusicBean> musicBeanList) {
+
+    }
+
+    @Override
+    public void updatePlayList(List<PlayListBean> playListBeanList) {
+
+    }
+
+    @Override
+    public void updateMusic(List<MusicBean> musicBeanList) {
+
+    }
+
+    @Override
+    public void updateIntro(AlbumBean albumBean, PlayListBean playListBean, MusicBean musicBean) {
+
+    }
+
 }

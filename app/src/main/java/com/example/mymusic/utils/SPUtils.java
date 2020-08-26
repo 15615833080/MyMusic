@@ -31,4 +31,14 @@ public class SPUtils {
         }
         return result;
     }
+    /**
+     * 退出登录，删除SP中的标记
+     */
+    public static boolean logout(Context context){
+        SharedPreferences sp = context.getSharedPreferences(Constant.SP_NAME_USER, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(Constant.SP_KEY_PHONE);
+        boolean result = editor.commit();
+        return result;
+    }
 }

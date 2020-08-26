@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+<!--            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/rotationImageHeight"
                 android:background="@drawable/rotation_background">
@@ -28,7 +28,7 @@
                 android:id="@+id/rv_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>-->
 
             <View
                 android:layout_width="match_parent"
@@ -67,7 +67,7 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -104,7 +104,7 @@
                 android:id="@+id/rv_album"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                ></androidx.recyclerview.widget.RecyclerView>
+                ></androidx.recyclerview.widget.RecyclerView>-->
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -46,6 +46,15 @@ public class ChangePasswordActivity extends BaseActivity {
 
     @OnClick(R.id.confirm_go)
     public void onViewClicked() {
-        inputPresenter.handleInput(inputOldPassword.getInputStr(), inputPassword.getInputStr(), inputPasswordConfirm.getInputStr());
+        /**
+         * 1.验证当前输入的密码
+         *      1.验证旧密码是否为空
+         *      2.验证新密码是否为空且是否一致
+         *      3.验证旧密码是否和当前登录用户的密码匹配
+         *          1、Realm 获取到当前登录的用户模型
+         *          2、根据用户模型中保存的密码匹配用户原密码
+         * 2.使用realm数据库进行修改
+         */
+        inputPresenter.handlerInputChangePassword(inputOldPassword.getInputStr(), inputPassword.getInputStr(), inputPasswordConfirm.getInputStr());
     }
 }
