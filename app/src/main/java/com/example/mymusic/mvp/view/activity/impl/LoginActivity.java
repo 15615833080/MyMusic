@@ -1,4 +1,4 @@
-package com.example.mymusic.mvp.view.activity;
+package com.example.mymusic.mvp.view.activity.impl;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,9 +7,8 @@ import android.widget.Button;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
-import com.example.mymusic.mvp.presenter.InputPresenterImpl;
+import com.example.mymusic.mvp.presenter.impl.InputPresenterImpl;
 import com.example.mymusic.mvp.view.views.InputView;
-import com.example.mymusic.utils.LogUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

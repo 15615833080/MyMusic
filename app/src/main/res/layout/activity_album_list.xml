@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.view.activity.AlbumListActivity">
+    tools:context=".mvp.view.activity.impl.AlbumListActivity">
 
     <include layout="@layout/nav_bar"/>
 

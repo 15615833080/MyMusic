@@ -1,6 +1,5 @@
 package com.example.mymusic.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,17 +10,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
 import com.example.mymusic.bean.AlbumBean;
-import com.example.mymusic.bean.MusicSourceBean;
-import com.example.mymusic.mvp.view.activity.AlbumListActivity;
+import com.example.mymusic.mvp.model.MusicSourceModel;
+import com.example.mymusic.mvp.view.activity.impl.AlbumListActivity;
 import com.example.mymusic.mvp.view.views.MyGridView;
 import com.example.mymusic.utils.Constant;
 import com.example.mymusic.utils.LogUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,6 +29,7 @@ public class MusicGridAdapter extends RecyclerView.Adapter<MusicGridAdapter.View
     private static final String TAG = "MusicGridAdapter";
     private Context mContext;
     private List<AlbumBean> albumBeanList;
+    private List<MusicSourceModel.AlbumModel> albumModelList;
 
     public MusicGridAdapter(Context context) {
         LogUtils.d(TAG, "MusicGridAdapter");
@@ -46,8 +44,8 @@ public class MusicGridAdapter extends RecyclerView.Adapter<MusicGridAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(albumBeanList != null){
-            AlbumBean albumBean = albumBeanList.get(position);
+        if(albumModelList != null){
+            MusicSourceModel.AlbumModel albumBean = albumModelList.get(position);
             Glide.with(mContext)
                     .load(albumBean.getPoster())
                     .into(holder.ivIcon);
@@ -61,6 +59,7 @@ public class MusicGridAdapter extends RecyclerView.Adapter<MusicGridAdapter.View
                     intent.putExtra(Constant.IS_ALBUM, true);
                     intent.putExtra(Constant.IS_PLAYLIST, false);
                     intent.putExtra(Constant.IS_MUSIC, false);
+                    intent.putExtra(Constant.ALBUM_POSTION, position);
                     mContext.startActivity(intent);
                 }
             });
@@ -68,14 +67,22 @@ public class MusicGridAdapter extends RecyclerView.Adapter<MusicGridAdapter.View
 
     }
 
-    public void update(List<AlbumBean> albumBeanList){
+    /*public void update(List<AlbumBean> albumBeanList){
         LogUtils.d(TAG, "albumBeanList" + albumBeanList);
         this.albumBeanList = albumBeanList;
+    }*/
+    public void updateInternet(List<MusicSourceModel.AlbumModel> albumModelList){
+        this.albumModelList = albumModelList;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return albumBeanList.size();
+        if(albumModelList != null){
+            return albumModelList.size();
+        }else {
+            return 6;
+        }
     }
 
     static

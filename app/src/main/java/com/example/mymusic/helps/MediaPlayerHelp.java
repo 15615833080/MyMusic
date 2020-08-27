@@ -70,7 +70,7 @@ public class MediaPlayerHelp {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer) {
                 if (onMediaPlayerHelperListener != null) {
-                    LogUtils.d(TAG, "mediaPlayer");
+                    LogUtils.d(TAG, "异步加载mediaPlayer完成");
                     onMediaPlayerHelperListener.onPrepared(mediaPlayer);
                 }else {
                     LogUtils.d(TAG, "mediaPlayer" + mediaPlayer);
@@ -82,7 +82,7 @@ public class MediaPlayerHelp {
             @Override
             public void onCompletion(MediaPlayer mediaPlayer) {
                 if(onMediaPlayerHelperListener != null){
-                    LogUtils.d(TAG, "mediaPlayer");
+                    LogUtils.d(TAG, "mediaPlayer服务播放完成");
                     onMediaPlayerHelperListener.onCompletion(mediaPlayer);
                 }else {
                     LogUtils.d(TAG, "mediaPlayer" + mediaPlayer);
@@ -113,7 +113,7 @@ public class MediaPlayerHelp {
     }
 
 
-    //定义接口，将异步加载完成的通知外放出去
+    //定义接口，将异步加载完成和播放完成的通知外放出去
     public interface OnMediaPlayerHelperListener {
         void onPrepared(MediaPlayer mediaPlayer);
         void onCompletion(MediaPlayer mediaPlayer);

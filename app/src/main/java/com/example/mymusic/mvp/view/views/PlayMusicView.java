@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.AttributeSet;
@@ -22,9 +21,9 @@ import androidx.annotation.RequiresApi;
 import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
 import com.example.mymusic.bean.MusicBean;
-import com.example.mymusic.helps.MediaPlayerHelp;
+import com.example.mymusic.mvp.model.MusicSourceModel;
 import com.example.mymusic.mvp.presenter.PlayPresenter;
-import com.example.mymusic.mvp.presenter.PlayPresenterImpl;
+import com.example.mymusic.mvp.presenter.impl.PlayPresenterImpl;
 import com.example.mymusic.service.MusicService;
 import com.example.mymusic.utils.LogUtils;
 
@@ -47,7 +46,7 @@ public class PlayMusicView extends FrameLayout {
     private Context mContext;
     private View mView;
     private Intent musicIntent;
-    private MusicBean mMusicBean;
+    private MusicSourceModel.AlbumModel.ListBeanX mMusicBean;
     private MusicService.MusicBindr mBinder;
     private Animation mPlayMusicAnim, mPlayNeedleAnim, mStopNeedleAnim;
     private boolean isPlaying, isBinding;
@@ -98,7 +97,7 @@ public class PlayMusicView extends FrameLayout {
      * 获取当前的musicBean
      * @param musicBean
      */
-    public void setMusic(MusicBean musicBean){
+    public void setMusic(MusicSourceModel.AlbumModel.ListBeanX musicBean){
         LogUtils.d(TAG,"setMusic" + musicBean);
         mMusicBean = musicBean;
         setMusicIcon();

@@ -17,14 +17,14 @@
             android:enabled="true"
             android:exported="true"></service>
 
-        <activity android:name=".mvp.view.activity.PlayMusicActivity" />
-        <activity android:name=".mvp.view.activity.AlbumListActivity" />
-        <activity android:name=".mvp.view.activity.ChangePasswordActivity" />
-        <activity android:name=".mvp.view.activity.MeActivity" />
-        <activity android:name=".mvp.view.activity.RegisterActivity" />
-        <activity android:name=".mvp.view.activity.LoginActivity" />
+        <activity android:name=".mvp.view.activity.impl.PlayMusicActivity" />
+        <activity android:name=".mvp.view.activity.impl.AlbumListActivity" />
+        <activity android:name=".mvp.view.activity.impl.ChangePasswordActivity" />
+        <activity android:name=".mvp.view.activity.impl.MeActivity" />
+        <activity android:name=".mvp.view.activity.impl.RegisterActivity" />
+        <activity android:name=".mvp.view.activity.impl.LoginActivity" />
         <activity
-            android:name=".mvp.view.activity.SplashActivity"
+            android:name=".mvp.view.activity.impl.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mvp.view.activity.MainActivity" />
+        <activity android:name=".mvp.view.activity.impl.MainActivity" />
     </application>
 
 </manifest>

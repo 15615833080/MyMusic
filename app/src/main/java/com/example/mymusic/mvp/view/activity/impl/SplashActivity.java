@@ -1,4 +1,4 @@
-package com.example.mymusic.mvp.view.activity;
+package com.example.mymusic.mvp.view.activity.impl;
 
 import androidx.annotation.NonNull;
 
@@ -12,13 +12,14 @@ import android.widget.TextView;
 
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
+import com.example.mymusic.base.BaseInternetActivity;
 import com.example.mymusic.utils.LogUtils;
 import com.example.mymusic.utils.UserUtils;
 
 import java.lang.ref.WeakReference;
 
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseInternetActivity {
 
     private static final String TAG = "SplashActivity";
     //倒计时标记

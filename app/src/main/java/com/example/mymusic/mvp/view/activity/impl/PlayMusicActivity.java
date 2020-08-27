@@ -1,34 +1,33 @@
-package com.example.mymusic.mvp.view.activity;
+package com.example.mymusic.mvp.view.activity.impl;
 
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
+import com.example.mymusic.base.BaseInternetActivity;
 import com.example.mymusic.bean.AlbumBean;
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.bean.PlayListBean;
+import com.example.mymusic.mvp.model.MusicSourceModel;
+import com.example.mymusic.mvp.presenter.DataHandlerInternetPresenter;
 import com.example.mymusic.mvp.presenter.DataHandlerPresenter;
-import com.example.mymusic.mvp.presenter.DataHandlerPresenterImpl;
-import com.example.mymusic.mvp.view.activity.impl.ShowDataView;
+import com.example.mymusic.mvp.presenter.impl.DataHandlerInternetPresenterImpl;
+import com.example.mymusic.mvp.presenter.impl.DataHandlerPresenterImpl;
 import com.example.mymusic.mvp.view.views.PlayMusicView;
 import com.example.mymusic.utils.Constant;
 import com.example.mymusic.utils.LogUtils;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
-public class PlayMusicActivity extends BaseActivity {
+public class PlayMusicActivity extends BaseInternetActivity {
 
     private static final String TAG = "PlayMusicActivity";
     @BindView(R.id.iv_bg)
@@ -42,7 +41,9 @@ public class PlayMusicActivity extends BaseActivity {
     @BindView(R.id.pl_back)
     ImageView plBack;
     private String musicId;
+    private int hotPosition;
     private DataHandlerPresenter dataHandlerPresenter;
+    private DataHandlerInternetPresenter dataHandlerInternetPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,15 @@ public class PlayMusicActivity extends BaseActivity {
     }
 
     private void initData() {
-        dataHandlerPresenter = new DataHandlerPresenterImpl(this, this);
-        musicId = getIntent().getStringExtra(Constant.MUSIC_ID);
-        dataHandlerPresenter.getMusicData(musicId);
+        //dataHandlerPresenter = new DataHandlerPresenterImpl(this, this);
+        dataHandlerInternetPresenter = new DataHandlerInternetPresenterImpl(this, this);
+        hotPosition = getIntent().getIntExtra(Constant.HOT_POSTION, -1);
+        isAlbum = getIntent().getBooleanExtra(Constant.IS_ALBUM, false);
+        isPlayList = getIntent().getBooleanExtra(Constant.IS_PLAYLIST, false);
+        isHot = getIntent().getBooleanExtra(Constant.IS_MUSIC, false);
+        LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot);
+        dataHandlerInternetPresenter.getAlbumMusicInternet(hotPosition, isAlbum, isHot);
+        //dataHandlerPresenter.getMusicData(musicId);
     }
 
     private void initView() {
@@ -81,6 +88,40 @@ public class PlayMusicActivity extends BaseActivity {
     }
 
     @Override
+    public void updataInternetAlbumMusicIntro(MusicSourceModel.AlbumModel.ListBeanX albumMusicIntro) {
+        if (albumMusicIntro != null) {
+            LogUtils.d(TAG, "musicBean" + albumMusicIntro);
+            Glide.with(this)
+                    .load(albumMusicIntro.getPoster())
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
+                    .into(ivBg);
+            tvAuthor.setText(albumMusicIntro.getAuthor());
+            tvName.setText(albumMusicIntro.getName());
+            playMusicView.init(this);
+            playMusicView.setMusic(albumMusicIntro);
+            playMusicView.playMusic();
+
+        }
+    }
+
+   /* @Override
+    public void updateInterentAlbumIntro(MusicSourceModel.AlbumModel albumModel) {
+        if (hotModel != null) {
+            LogUtils.d(TAG, "musicBean" + hotModel);
+            Glide.with(this)
+                    .load(hotModel.getPoster())
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
+                    .into(ivBg);
+            tvAuthor.setText(hotModel.getAuthor());
+            tvName.setText(hotModel.getName());
+            *//*playMusicView.init(this);
+            playMusicView.setMusic(hotModel);
+            playMusicView.playMusic();*//*
+
+        }
+    }*/
+
+    /*@Override
     public void updateIntro(AlbumBean albumBean, PlayListBean playListBean, MusicBean musicBean) {
         if(musicBean != null){
             LogUtils.d(TAG, "musicBean" + musicBean);
@@ -95,12 +136,12 @@ public class PlayMusicActivity extends BaseActivity {
             playMusicView.playMusic();
 
         }
-    }
+    }*/
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         playMusicView.destroy();
-        dataHandlerPresenter.close();
+        //dataHandlerPresenter.close();
     }
 }

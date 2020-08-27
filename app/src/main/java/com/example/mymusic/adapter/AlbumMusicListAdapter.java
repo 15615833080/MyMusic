@@ -25,7 +25,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.ViewHolder> {
+public class AlbumMusicListAdapter extends RecyclerView.Adapter<AlbumMusicListAdapter.ViewHolder> {
 
     private Context mContext;
     private View mItemView;
@@ -33,9 +33,9 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     private List<MusicBean> musicBeanList;
     private AlbumBean albumBean;
     private boolean isCalcaulationRvHeight;
-    private List<MusicSourceModel.HotModel> hotModelList;
+    private List<MusicSourceModel.AlbumModel.ListBeanX> albumModelMusicList;
 
-    public MusicListAdapter(Context context, RecyclerView recyclerView) {
+    public AlbumMusicListAdapter(Context context, RecyclerView recyclerView) {
         mContext = context;
         mRv = recyclerView;
     }
@@ -50,8 +50,8 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         setRecyclerViewHeight();
-        if (hotModelList != null) {
-            final MusicSourceModel.HotModel musicBean = hotModelList.get(position);
+        if (albumModelMusicList != null) {
+            final MusicSourceModel.AlbumModel.ListBeanX musicBean = albumModelMusicList.get(position);
             Glide.with(mContext)
                     .load(musicBean.getPoster())
                     .into(holder.ivIcon);
@@ -73,10 +73,10 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
 
     @Override
     public int getItemCount() {
-        if(hotModelList != null){
-            return hotModelList.size();
+        if(albumModelMusicList != null){
+            return albumModelMusicList.size();
         }else {
-            return 8;
+            return 10;
         }
     }
 
@@ -86,10 +86,11 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
         }
     }
 
-    public void updateInternet(List<MusicSourceModel.HotModel> hotModelList){
-        this.hotModelList = hotModelList;
+    public void updateInternetAlbumMusic(List<MusicSourceModel.AlbumModel.ListBeanX> albumModelMusicList){
+        this.albumModelMusicList = albumModelMusicList;
         notifyDataSetChanged();
     }
+
 
 /*    public void updateAlbum(AlbumBean albumBean) {
         if (albumBean != null) {

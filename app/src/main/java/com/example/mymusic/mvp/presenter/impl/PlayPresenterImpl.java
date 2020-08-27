@@ -1,4 +1,4 @@
-package com.example.mymusic.mvp.presenter;
+package com.example.mymusic.mvp.presenter.impl;
 
 import android.app.Service;
 import android.content.ComponentName;
@@ -10,6 +10,7 @@ import android.os.IBinder;
 
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.helps.MediaPlayerHelp;
+import com.example.mymusic.mvp.presenter.PlayPresenter;
 import com.example.mymusic.service.MusicService;
 import com.example.mymusic.utils.LogUtils;
 
@@ -48,7 +49,7 @@ public class PlayPresenterImpl implements PlayPresenter {
             mMediaPlayerHelp.setOnMediaPlayerHelperListener(new MediaPlayerHelp.OnMediaPlayerHelperListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
-                    LogUtils.d(TAG, "setOnMediaPlayerHelperListener");
+                    LogUtils.d(TAG, "mediaplayer开始播放");
                     mMediaPlayerHelp.start();
                 }
 

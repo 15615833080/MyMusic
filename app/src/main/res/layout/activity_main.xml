@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".mvp.view.activity.MainActivity">
+    tools:context=".mvp.view.activity.impl.MainActivity">
 
     <include layout="@layout/nav_bar"/>
 

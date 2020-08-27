@@ -1,12 +1,11 @@
-package com.example.mymusic.mvp.presenter;
+package com.example.mymusic.mvp.presenter.impl;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import com.blankj.utilcode.util.ActivityUtils;
-import com.example.mymusic.mvp.view.activity.LoginActivity;
-import com.example.mymusic.mvp.view.activity.MainActivity;
+import com.example.mymusic.mvp.presenter.InputPresenter;
+import com.example.mymusic.mvp.view.activity.impl.MainActivity;
 import com.example.mymusic.utils.LogUtils;
 import com.example.mymusic.utils.UserUtils;
 

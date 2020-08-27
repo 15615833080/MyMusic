@@ -1,4 +1,4 @@
-package com.example.mymusic.mvp.presenter;
+package com.example.mymusic.mvp.presenter.impl;
 
 import android.content.Context;
 
@@ -6,7 +6,8 @@ import com.example.mymusic.bean.AlbumBean;
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.bean.MusicSourceBean;
 import com.example.mymusic.helps.RealmHelp;
-import com.example.mymusic.mvp.view.activity.impl.ShowDataView;
+import com.example.mymusic.mvp.presenter.DataHandlerPresenter;
+import com.example.mymusic.mvp.view.activity.ShowDataView;
 import com.example.mymusic.utils.LogUtils;
 
 public class DataHandlerPresenterImpl implements DataHandlerPresenter {

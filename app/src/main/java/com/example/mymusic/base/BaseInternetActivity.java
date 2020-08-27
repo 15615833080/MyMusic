@@ -1,31 +1,43 @@
 package com.example.mymusic.base;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mymusic.R;
 import com.example.mymusic.bean.AlbumBean;
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.bean.PlayListBean;
+import com.example.mymusic.mvp.model.MusicSourceModel;
+import com.example.mymusic.mvp.presenter.DataHandlerInternetPresenter;
 import com.example.mymusic.mvp.presenter.InputPresenter;
-import com.example.mymusic.mvp.view.activity.impl.MeActivity;
+import com.example.mymusic.mvp.presenter.impl.DataHandlerInternetPresenterImpl;
 import com.example.mymusic.mvp.view.activity.ShowDataView;
+import com.example.mymusic.mvp.view.activity.ShowInternetDataView;
+import com.example.mymusic.mvp.view.activity.impl.MeActivity;
+import com.example.mymusic.utils.LogUtils;
 
 import java.util.List;
 
 
-public class BaseActivity extends AppCompatActivity implements View.OnClickListener, ShowDataView {
+public class BaseInternetActivity extends AppCompatActivity implements View.OnClickListener, ShowInternetDataView {
 
+    private static final String TAG = "BaseInternetActivity";
     private ImageView navBack, navMe;
     private TextView navTitle;
     public InputPresenter inputPresenter;
     public boolean isAlbum;
     public boolean isPlayList;
-    public boolean isMusic;
+    public boolean isHot;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     /**
      * 初始化navBar
@@ -33,6 +45,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
      * @param title
      * @param isShowMe
      */
+
     public void initNavBar(boolean isShowBack, String title, boolean isShowMe){
         navBack = findViewById(R.id.iv_back);
         navTitle = findViewById(R.id.tv_title);
@@ -59,28 +72,37 @@ public class BaseActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void updateAlbum(List<AlbumBean> albumBeanList) {
+    public void updateInternetAlbum(List<MusicSourceModel.AlbumModel> albumModelList) {
 
     }
 
     @Override
-    public void updateHot(List<MusicBean> musicBeanList) {
+    public void updateInternetHot(List<MusicSourceModel.HotModel> hotModelList) {
 
     }
 
     @Override
-    public void updatePlayList(List<PlayListBean> playListBeanList) {
+    public void updateInterentAlbumIntro(MusicSourceModel.AlbumModel albumModel) {
 
     }
 
     @Override
-    public void updateMusic(List<MusicBean> musicBeanList) {
+    public void updateInternetAlbumMusic(List<MusicSourceModel.AlbumModel.ListBeanX> albumMusicList) {
 
     }
 
     @Override
-    public void updateIntro(AlbumBean albumBean, PlayListBean playListBean, MusicBean musicBean) {
+    public void updataInternetAlbumMusicIntro(MusicSourceModel.AlbumModel.ListBeanX AlbumMusicIntro) {
 
     }
 
+    @Override
+    public void updateInternetHotMusicIntro(MusicSourceModel.HotModel hotModel) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

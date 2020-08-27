@@ -12,7 +12,7 @@ import com.example.mymusic.R;
 import com.example.mymusic.helps.RealmHelp;
 import com.example.mymusic.helps.UserHelp;
 import com.example.mymusic.mvp.model.UserModel;
-import com.example.mymusic.mvp.view.activity.LoginActivity;
+import com.example.mymusic.mvp.view.activity.impl.LoginActivity;
 
 import java.util.List;
 

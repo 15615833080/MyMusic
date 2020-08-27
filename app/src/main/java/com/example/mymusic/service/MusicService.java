@@ -8,11 +8,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
-import android.provider.Settings;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
@@ -20,9 +18,12 @@ import androidx.core.app.NotificationCompat;
 import com.example.mymusic.R;
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.helps.MediaPlayerHelp;
+import com.example.mymusic.mvp.model.MusicSourceModel;
 import com.example.mymusic.mvp.presenter.PlayPresenter;
-import com.example.mymusic.mvp.presenter.PlayPresenterImpl;
-import com.example.mymusic.mvp.view.activity.PlayMusicActivity;
+import com.example.mymusic.mvp.presenter.impl.PlayPresenterImpl;
+import com.example.mymusic.mvp.view.activity.impl.LoginActivity;
+import com.example.mymusic.mvp.view.activity.impl.PlayMusicActivity;
+import com.example.mymusic.mvp.view.activity.impl.SplashActivity;
 import com.example.mymusic.mvp.view.views.PlayMusicView;
 import com.example.mymusic.utils.LogUtils;
 
@@ -39,7 +40,7 @@ public class MusicService extends Service {
     private static final String TAG = "MusicService";
     private PlayMusicView playMusicView;
     private MediaPlayerHelp mMediaPlayerHelp;
-    private MusicBean mMusicBean;
+    private MusicSourceModel.AlbumModel.ListBeanX mMusicBean;
     private PlayPresenter playPresenter;
     public static final int NOTIFICATION_ID = 1;
 
@@ -49,8 +50,9 @@ public class MusicService extends Service {
     public class MusicBindr extends Binder {
         /**
          * 对于service来说，需要知道播放哪个音乐
+         * @param musicBean
          */
-        public void setMusic(MusicBean musicBean) {
+        public void setMusic(MusicSourceModel.AlbumModel.ListBeanX musicBean) {
             mMusicBean = musicBean;
             startForeground();
         }
@@ -102,7 +104,7 @@ public class MusicService extends Service {
         /**
          * 通知栏点击跳转的intent
          */
-        Intent intent = new Intent(this, PlayMusicActivity.class);
+        Intent intent = new Intent(this, SplashActivity.class);
         PendingIntent pendingIntent = PendingIntent
                 .getActivity(this, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 

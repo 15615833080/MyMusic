@@ -1,4 +1,4 @@
-package com.example.mymusic.mvp.view.activity.impl;
+package com.example.mymusic.mvp.view.activity;
 
 import com.example.mymusic.bean.AlbumBean;
 import com.example.mymusic.bean.MusicBean;

@@ -19,6 +19,6 @@ public class MyApplication extends Application {
         myApplication = this;
         Utils.init(this);
         Realm.init(this);
-        RealmHelp.migraiton();
+        //RealmHelp.migraiton();
     }
 }
