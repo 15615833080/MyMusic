@@ -1,0 +1,9 @@
+使用MVP模式
+使用realm数据库
+整合rxjava和retrofit框架从服务器获取json数据
+使用mediaplayer播放音乐
+使用service + notification实现从服务端播放
+使用sharedpreferences记住密码自动登录
+使用自定义view
+使用Android动画机制
+后期继续维护。
