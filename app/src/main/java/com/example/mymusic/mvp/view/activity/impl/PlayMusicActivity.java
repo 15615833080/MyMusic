@@ -44,6 +44,8 @@ public class PlayMusicActivity extends BaseInternetActivity {
     private int hotPosition;
     private DataHandlerPresenter dataHandlerPresenter;
     private DataHandlerInternetPresenter dataHandlerInternetPresenter;
+    private MusicSourceModel.AlbumModel.ListBeanX mMusicBean;
+    private MusicSourceModel.HotModel mHotModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +65,47 @@ public class PlayMusicActivity extends BaseInternetActivity {
         isPlayList = getIntent().getBooleanExtra(Constant.IS_PLAYLIST, false);
         isHot = getIntent().getBooleanExtra(Constant.IS_MUSIC, false);
         LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot);
-        dataHandlerInternetPresenter.getAlbumMusicInternet(hotPosition, isAlbum, isHot);
+
+        //dataHandlerInternetPresenter.getAlbumMusicInternet(hotPosition, isAlbum, isHot);
         //dataHandlerPresenter.getMusicData(musicId);
+        if(isAlbum){
+            mMusicBean = getIntent().getBundleExtra(Constant.INTENT_ALBUM_MUSIC).getParcelable(Constant.BUNDLE_ALBUM_MUSIC);
+            LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot + "   " + mMusicBean);
+            setData();
+        }else if(isHot){
+            mHotModel = getIntent().getBundleExtra(Constant.INTENT_HOT_MUSIC).getParcelable(Constant.BUNDLE_HOT_MUSIC);
+            LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot + "   " + mHotModel);
+            setHotData();
+        }
+    }
+
+    private void setHotData() {
+        if (mHotModel != null) {
+            Glide.with(this)
+                    .load(mHotModel.getPoster())
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
+                    .into(ivBg);
+            tvAuthor.setText(mHotModel.getAuthor());
+            tvName.setText(mHotModel.getName());
+            playMusicView.init(this);
+            playMusicView.setMusicHot(mHotModel);
+            playMusicView.playMusic();
+        }
+    }
+
+    private void setData() {
+        if (mMusicBean != null) {
+            Glide.with(this)
+                    .load(mMusicBean.getPoster())
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
+                    .into(ivBg);
+            tvAuthor.setText(mMusicBean.getAuthor());
+            tvName.setText(mMusicBean.getName());
+            playMusicView.init(this);
+            playMusicView.setMusic(mMusicBean);
+            playMusicView.playMusic();
+
+        }
     }
 
     private void initView() {

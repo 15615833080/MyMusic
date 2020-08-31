@@ -12,4 +12,5 @@ public interface ShowInternetDataView {
     void updateInternetAlbumMusic(List<MusicSourceModel.AlbumModel.ListBeanX> albumMusicList);
     void updataInternetAlbumMusicIntro(MusicSourceModel.AlbumModel.ListBeanX AlbumMusicIntro);
     void updateInternetHotMusicIntro(MusicSourceModel.HotModel hotModel);
+    void passMusicSource(MusicSourceModel musicSourceModel);
 }

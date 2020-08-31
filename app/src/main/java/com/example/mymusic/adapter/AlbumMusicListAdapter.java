@@ -2,6 +2,7 @@ package com.example.mymusic.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,8 +64,11 @@ public class AlbumMusicListAdapter extends RecyclerView.Adapter<AlbumMusicListAd
                     Intent intent = new Intent(mContext, PlayMusicActivity.class);
                     intent.putExtra(Constant.MUSIC_ID, musicBean.getMusicId());
                     intent.putExtra(Constant.HOT_POSTION, position);
-                    intent.putExtra(Constant.IS_ALBUM, false);
-                    intent.putExtra(Constant.IS_MUSIC, true);
+                    intent.putExtra(Constant.IS_ALBUM, true);
+                    intent.putExtra(Constant.IS_MUSIC, false);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constant.BUNDLE_ALBUM_MUSIC, musicBean);
+                    intent.putExtra(Constant.INTENT_ALBUM_MUSIC, bundle);
                     mContext.startActivity(intent);
                 }
             });

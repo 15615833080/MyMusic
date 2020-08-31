@@ -15,7 +15,7 @@ public class DataHandlerInternetPresenterImpl implements DataHandlerInternetPres
     private Context mContext;
     private ShowInternetDataView showInternetDataView;
     private SetMusicSourceModel setMusicSourceModel = new SetMusicSourceModelImpl(this);
-    private static MusicSourceModel mMusicSourceModel;
+    private MusicSourceModel mMusicSourceModel;
 
     public DataHandlerInternetPresenterImpl(Context context, ShowInternetDataView showInternetDataView, int tag) {
         mContext = context;
@@ -35,6 +35,7 @@ public class DataHandlerInternetPresenterImpl implements DataHandlerInternetPres
         if (mMusicSourceModel != null) {
             showInternetDataView.updateInternetAlbum(mMusicSourceModel.getAlbum());
             showInternetDataView.updateInternetHot(mMusicSourceModel.getHot());
+            showInternetDataView.passMusicSource(musicSourceModel);
         }
     }
 

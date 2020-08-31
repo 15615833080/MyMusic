@@ -2,6 +2,6 @@
 <resources>
     <integer name="anim_duration">1000</integer>
     <integer name="play_music_anim_duration">10000</integer>
-    <integer name="play_needle_anim_duration">600</integer>
+    <integer name="play_needle_anim_duration">1000</integer>
 
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
+    android:interpolator="@android:anim/linear_interpolator"
+    android:propertyName="rotation"
+    android:valueFrom="0"
+    android:valueTo="-20"
+    android:duration="@integer/play_needle_anim_duration"
+    android:fillAfter="true"
+    >
+</objectAnimator>

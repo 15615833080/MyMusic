@@ -1,8 +1,16 @@
 package com.example.mymusic.mvp.model;
 
-import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
 
-public class MusicSourceModel {
+import java.nio.file.Path;
+import java.util.List;
+import java.util.PrimitiveIterator;
+
+import okhttp3.MultipartBody.Part;
+
+public class MusicSourceModel implements Parcelable {
 
     private List<PlayListBean> playList;
     private List<AlbumModel> album;
@@ -32,7 +40,52 @@ public class MusicSourceModel {
         this.hot = hot;
     }
 
-    public static class PlayListBean {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * 将数据进行序列化
+     * @param parcel
+     * @param i
+     */
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeList(playList);
+        parcel.writeList(album);
+        parcel.writeList(hot);
+        //写另一个自定义的类，其也实现了Parcelable接口
+        //parcel.writeParcelable();
+    }
+
+    /**
+     * 反序列化
+     */
+    public static final Parcelable.Creator<MusicSourceModel> CREATOR = new Parcelable.Creator<MusicSourceModel>(){
+
+        @Override
+        public MusicSourceModel createFromParcel(Parcel parcel) {
+            return new MusicSourceModel(parcel);
+        }
+
+        @Override
+        public MusicSourceModel[] newArray(int i) {
+            return new MusicSourceModel[i];
+        }
+    };
+
+    /**
+     * 反序列化
+     * @param parcel
+     */
+    private MusicSourceModel(Parcel parcel){
+       parcel.readList(playList, (ClassLoader) PlayListBean.CREATOR);
+       parcel.readList(album, (ClassLoader) AlbumModel.CREATOR);
+       parcel.readList(hot, (ClassLoader) HotModel.CREATOR);
+    }
+
+    public static class PlayListBean implements Parcelable{
 
         /**
          * playListId : 1
@@ -121,7 +174,45 @@ public class MusicSourceModel {
                     '}';
         }
 
-        public static class ListBean {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(playListId);
+            parcel.writeString(name);
+            parcel.writeString(title);
+            parcel.writeString(poster);
+            parcel.writeString(playNum);
+            parcel.writeList(list);
+        }
+        public static final Parcelable.Creator<PlayListBean> CREATOR = new Parcelable.Creator<PlayListBean>(){
+
+            @Override
+            public PlayListBean createFromParcel(Parcel parcel) {
+                return new MusicSourceModel.PlayListBean(parcel);
+            }
+
+            @Override
+            public PlayListBean[] newArray(int i) {
+                return new PlayListBean[i];
+            }
+        };
+        private PlayListBean(Parcel parcel){
+            playListId = parcel.readString();
+            name = parcel.readString();
+            title = parcel.readString();
+            intro = parcel.readString();
+            poster = parcel.readString();
+            playNum = parcel.readString();
+            list = parcel.readArrayList(Thread.currentThread().getContextClassLoader());
+
+            //parcel.readList(list, (ClassLoader) ListBean.CREATOR);
+        }
+
+        public static class ListBean implements Parcelable{
             /**
              * musicId : 101
              * name : 그만 말해
@@ -185,10 +276,46 @@ public class MusicSourceModel {
                         ", author='" + author + '\'' +
                         '}';
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel parcel, int i) {
+                parcel.writeString(musicId);
+                parcel.writeString(name);
+                parcel.writeString(poster);
+                parcel.writeString(path);
+                parcel.writeString(author);
+
+            }
+            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>(){
+
+                @Override
+                public ListBean createFromParcel(Parcel parcel) {
+                    return new MusicSourceModel.PlayListBean.ListBean(parcel);
+                }
+
+                @Override
+                public ListBean[] newArray(int i) {
+                    return new ListBean[i];
+                }
+            };
+
+            private ListBean(Parcel parcel){
+                musicId = parcel.readString();
+                name = parcel.readString();
+                poster = parcel.readString();
+                path = parcel.readString();
+                author = parcel.readString();
+            }
         }
+
     }
 
-    public static class AlbumModel {
+    public static class AlbumModel implements Parcelable{
         @Override
         public String toString() {
             return "AlbumModel{" +
@@ -278,7 +405,46 @@ public class MusicSourceModel {
             this.list = list;
         }
 
-        public static class ListBeanX {
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(albumId);
+            parcel.writeString(name);
+            parcel.writeString(title);
+            parcel.writeString(intro);
+            parcel.writeString(poster);
+            parcel.writeString(playNum);
+            parcel.writeList(list);
+
+        }
+        public static final Parcelable.Creator<AlbumModel> CREATOR = new Parcelable.Creator<AlbumModel>(){
+
+            @Override
+            public AlbumModel createFromParcel(Parcel parcel) {
+                return new MusicSourceModel.AlbumModel(parcel);
+            }
+
+            @Override
+            public AlbumModel[] newArray(int i) {
+                return new AlbumModel[i];
+            }
+        };
+        private AlbumModel(Parcel parcel){
+            albumId = parcel.readString();
+            name = parcel.readString();
+            title = parcel.readString();
+            intro = parcel.readString();
+            poster = parcel.readString();
+            playNum = parcel.readString();
+            list = parcel.readArrayList(Thread.currentThread().getContextClassLoader());
+            //parcel.readList(list, ListBeanX.class.getClassLoader());
+        }
+
+        public static class ListBeanX implements Parcelable{
             @Override
             public String toString() {
                 return "ListBeanX{" +
@@ -343,10 +509,44 @@ public class MusicSourceModel {
             public void setAuthor(String author) {
                 this.author = author;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel parcel, int i) {
+                parcel.writeString(musicId);
+                parcel.writeString(name);
+                parcel.writeString(poster);
+                parcel.writeString(path);
+                parcel.writeString(author);
+
+            }
+            public static final Parcelable.Creator<ListBeanX> CREATOR = new Parcelable.Creator<ListBeanX>(){
+
+                @Override
+                public ListBeanX createFromParcel(Parcel parcel) {
+                    return new MusicSourceModel.AlbumModel.ListBeanX(parcel);
+                }
+
+                @Override
+                public ListBeanX[] newArray(int i) {
+                    return new ListBeanX[i];
+                }
+            };
+            private ListBeanX(Parcel parcel){
+                musicId = parcel.readString();
+                name = parcel.readString();
+                poster = parcel.readString();
+                path = parcel.readString();
+                author = parcel.readString();
+            }
         }
     }
 
-    public static class HotModel {
+    public static class HotModel implements Parcelable{
         /**
          * musicId : 7
          * name : 音乐1
@@ -410,6 +610,39 @@ public class MusicSourceModel {
                     ", path='" + path + '\'' +
                     ", author='" + author + '\'' +
                     '}';
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(musicId);
+            parcel.writeString(name);
+            parcel.writeString(poster);
+            parcel.writeString(path);
+            parcel.writeString(author);
+        }
+        public static final Parcelable.Creator<HotModel> CREATOR = new Parcelable.Creator<HotModel>(){
+
+            @Override
+            public HotModel createFromParcel(Parcel parcel) {
+                return new MusicSourceModel.HotModel(parcel);
+            }
+
+            @Override
+            public HotModel[] newArray(int i) {
+                return new HotModel[i];
+            }
+        };
+        private HotModel(Parcel parcel){
+            musicId = parcel.readString();
+            name = parcel.readString();
+            poster = parcel.readString();
+            path = parcel.readString();
+            author = parcel.readString();
         }
     }
 

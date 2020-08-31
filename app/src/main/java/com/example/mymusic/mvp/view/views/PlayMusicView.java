@@ -1,5 +1,9 @@
 package com.example.mymusic.mvp.view.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -7,10 +11,12 @@ import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.AttributeSet;
+import android.util.Property;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -22,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.mymusic.R;
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.mvp.model.MusicSourceModel;
+import com.example.mymusic.mvp.model.MusicSourceModel.AlbumModel.ListBeanX;
 import com.example.mymusic.mvp.presenter.PlayPresenter;
 import com.example.mymusic.mvp.presenter.impl.PlayPresenterImpl;
 import com.example.mymusic.service.MusicService;
@@ -46,11 +53,14 @@ public class PlayMusicView extends FrameLayout {
     private Context mContext;
     private View mView;
     private Intent musicIntent;
-    private MusicSourceModel.AlbumModel.ListBeanX mMusicBean;
+    private ListBeanX mMusicBean;
+    private MusicSourceModel.HotModel mHotModel;
     private MusicService.MusicBindr mBinder;
     private Animation mPlayMusicAnim, mPlayNeedleAnim, mStopNeedleAnim;
+    Animator mPlayMusicAnimtor, mPlayNeedleAnimtor, mStopNeedleAnimtor;
     private boolean isPlaying, isBinding;
     PlayPresenter mPlayPresenter;
+    private ObjectAnimator mObjectPlayMusicAnimtor, mObjectPlayNeedleAnimtor, mObjectStopNeedleAnimtor;
 
     public PlayMusicView(@NonNull Context context) {
         super(context);
@@ -79,42 +89,87 @@ public class PlayMusicView extends FrameLayout {
         mView = LayoutInflater.from(mContext).inflate(R.layout.play_music_view, this, false);
         ButterKnife.bind(this, mView);
         //布局关联属性
-        /**
+        /**补间动画
          * 1、定义所需要执行的动画
          *      1、光盘转动的动画
          *      2、指针指向光盘的动画
          *      3、指针离开光盘的动画
          * 2、startAnimation
          */
-        mPlayMusicAnim = AnimationUtils.loadAnimation(mContext, R.anim.play_music_anim);
+        /*mPlayMusicAnim = AnimationUtils.loadAnimation(mContext, R.anim.play_music_anim);
         mPlayNeedleAnim = AnimationUtils.loadAnimation(mContext, R.anim.play_needle_anim);
-        mStopNeedleAnim = AnimationUtils.loadAnimation(mContext, R.anim.stop_needle_anim);
+        mStopNeedleAnim = AnimationUtils.loadAnimation(mContext, R.anim.stop_needle_anim);*/
+        /**
+         * 属性动画 --- xml方式
+         */
+        /*mPlayMusicAnimtor = AnimatorInflater.loadAnimator(mContext, R.animator.play_music_animator);
+        mPlayNeedleAnimtor = AnimatorInflater.loadAnimator(mContext, R.animator.play_needle_animator);
+        mStopNeedleAnimtor = AnimatorInflater.loadAnimator(mContext, R.animator.stop_needle_animator);*/
+        /**
+         * 属性动画  --- java代码方式
+         */
+        setObjectMusicAnimtor();
         addView(mView);
         mPlayPresenter = new PlayPresenterImpl(mContext);
     }
 
+    private void setObjectMusicAnimtor() {
+        mObjectPlayMusicAnimtor = ObjectAnimator.ofFloat(flPlayMusic, "rotation", 0f, 360f);
+        mObjectPlayMusicAnimtor.setInterpolator(new LinearInterpolator());
+        mObjectPlayMusicAnimtor.setDuration(10000);
+        mObjectPlayMusicAnimtor.setRepeatCount(ValueAnimator.INFINITE);
+
+        ivNeedle.setPivotY(0);
+        ivNeedle.setPivotX(0);
+        mObjectPlayNeedleAnimtor = ObjectAnimator.ofFloat(ivNeedle, "rotation", -20f, 0);
+        mObjectPlayNeedleAnimtor.setInterpolator(new LinearInterpolator());
+        mObjectPlayNeedleAnimtor.setDuration(800);
+        mObjectPlayNeedleAnimtor.setupEndValues();
+
+        mObjectStopNeedleAnimtor = ObjectAnimator.ofFloat(ivNeedle, "rotation", 0, -20);
+        mObjectStopNeedleAnimtor.setDuration(1200);
+        mObjectStopNeedleAnimtor.setInterpolator(new LinearInterpolator());
+        mObjectStopNeedleAnimtor.setupStartValues();
+
+    }
+
     /**
      * 获取当前的musicBean
+     *
      * @param musicBean
      */
-    public void setMusic(MusicSourceModel.AlbumModel.ListBeanX musicBean){
-        LogUtils.d(TAG,"setMusic" + musicBean);
+    public void setMusic(ListBeanX musicBean) {
+        LogUtils.d(TAG, "setMusic" + musicBean);
         mMusicBean = musicBean;
         setMusicIcon();
     }
+
+    public void setMusicHot(MusicSourceModel.HotModel mHotModel) {
+        LogUtils.d(TAG, "setMusic" + mHotModel);
+        this.mHotModel = mHotModel;
+        setMusicIcon();
+    }
+
     /**
      * 光盘中音乐封面图片
      */
     public void setMusicIcon() {
-        Glide.with(mContext)
-                .load(mMusicBean.getPoster())
-                .into(ivIcon);
+        if (mMusicBean != null) {
+            Glide.with(mContext)
+                    .load(mMusicBean.getPoster())
+                    .into(ivIcon);
+        } else if (mHotModel != null) {
+            Glide.with(mContext)
+                    .load(mHotModel.getPoster())
+                    .into(ivIcon);
+        }
     }
 
     @OnClick(R.id.fl_play_music)
     public void onViewClicked() {
         trigger();
     }
+
     /**
      * 播放状态
      */
@@ -126,18 +181,26 @@ public class PlayMusicView extends FrameLayout {
         }
 
     }
+
     /**
      * 播放音乐
      */
     public void playMusic() {
         isPlaying = true;
         ivPlay.setVisibility(GONE);
-        flPlayMusic.startAnimation(mPlayMusicAnim);
-        ivNeedle.startAnimation(mPlayNeedleAnim);
-        LogUtils.d(TAG,"playMusic" + isPlaying);
+        /*mPlayMusicAnimtor.setTarget(flPlayMusic);
+        mPlayMusicAnimtor.start();*/
+        mObjectPlayMusicAnimtor.start();
+        mObjectPlayNeedleAnimtor.start();
+        /*mPlayNeedleAnimtor.setTarget(ivNeedle);
+        ivNeedle.setPivotX(0);
+        ivNeedle.setPivotY(0);
+        mPlayNeedleAnimtor.start();*/
+        //flPlayMusic.startAnimation(mPlayMusicAnim);
+        //ivNeedle.startAnimation(mPlayNeedleAnim);
+        LogUtils.d(TAG, "playMusic" + isPlaying);
         startMusicService();
         //mPlayPresenter.playMusic(mPath);
-
     }
 
     /**
@@ -146,9 +209,15 @@ public class PlayMusicView extends FrameLayout {
     public void stopMusic() {
         isPlaying = false;
         ivPlay.setVisibility(VISIBLE);
-        flPlayMusic.clearAnimation();
-        ivNeedle.startAnimation(mStopNeedleAnim);
-        if(mBinder != null){
+        mObjectPlayMusicAnimtor.end();
+        mObjectStopNeedleAnimtor.start();
+        //mPlayMusicAnimtor.end();
+       /* mObjectPlayMusicAnimtor.end();
+        mStopNeedleAnimtor.setTarget(ivNeedle);
+        mStopNeedleAnimtor.start();*/
+        //flPlayMusic.clearAnimation();
+        //ivNeedle.startAnimation(mStopNeedleAnim);
+        if (mBinder != null) {
             mBinder.pauseMusic();
 
         }
@@ -161,16 +230,16 @@ public class PlayMusicView extends FrameLayout {
      */
     public void startMusicService() {
         if (musicIntent == null) {
-            LogUtils.d(TAG,"startMusicService" + musicIntent);
+            LogUtils.d(TAG, "startMusicService" + musicIntent);
             musicIntent = new Intent(mContext, MusicService.class);
             mContext.startService(musicIntent);
-        }else{
+        } else {
             mBinder.playMusic();
         }
         //绑定service
-        if(!isBinding){
+        if (!isBinding) {
             isBinding = true;
-            LogUtils.d(TAG,"isBinding" + isBinding);
+            LogUtils.d(TAG, "isBinding" + isBinding);
             mContext.bindService(musicIntent, conn, Context.BIND_AUTO_CREATE);
         }
     }
@@ -178,8 +247,8 @@ public class PlayMusicView extends FrameLayout {
     /**
      * 解除绑定
      */
-    public void destroy(){
-        if(isBinding){
+    public void destroy() {
+        if (isBinding) {
             isBinding = false;
             mContext.unbindService(conn);
         }
@@ -189,8 +258,8 @@ public class PlayMusicView extends FrameLayout {
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
             mBinder = (MusicService.MusicBindr) iBinder;
-            LogUtils.d(TAG,"onServiceConnected" + mBinder);
-            mBinder.setMusic(mMusicBean);
+            LogUtils.d(TAG, "onServiceConnected" + mBinder);
+            mBinder.setMusic(mMusicBean, mHotModel);
             mBinder.playMusic();
         }
 

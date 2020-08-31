@@ -102,6 +102,11 @@ public class BaseInternetActivity extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    public void passMusicSource(MusicSourceModel musicSourceModel) {
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
     }

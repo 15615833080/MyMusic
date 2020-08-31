@@ -86,6 +86,11 @@ public class MainActivity extends BaseInternetActivity {
         }
     }
 
+    @Override
+    public void passMusicSource(MusicSourceModel musicSourceModel) {
+        super.passMusicSource(musicSourceModel);
+    }
+
     /*@Override
     public void updateAlbum(List<AlbumBean> albumBeanList) {
         LogUtils.d(TAG, "mGridAdapter" + mGridAdapter + albumBeanList);
@@ -105,6 +110,7 @@ public class MainActivity extends BaseInternetActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        dataHandlerInternetPresenter.dsetroy();
     }
 
 }

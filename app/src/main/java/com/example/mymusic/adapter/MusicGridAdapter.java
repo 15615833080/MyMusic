@@ -2,6 +2,9 @@ package com.example.mymusic.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +22,7 @@ import com.example.mymusic.mvp.view.views.MyGridView;
 import com.example.mymusic.utils.Constant;
 import com.example.mymusic.utils.LogUtils;
 
+import java.nio.file.Path;
 import java.util.List;
 
 import butterknife.BindView;
@@ -60,6 +64,9 @@ public class MusicGridAdapter extends RecyclerView.Adapter<MusicGridAdapter.View
                     intent.putExtra(Constant.IS_PLAYLIST, false);
                     intent.putExtra(Constant.IS_MUSIC, false);
                     intent.putExtra(Constant.ALBUM_POSTION, position);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constant.BUNDLE_MUSIC_SOURCE, albumBean);
+                    intent.putExtra(Constant.INTENT_MUSIC_SOURCE,bundle);
                     mContext.startActivity(intent);
                 }
             });

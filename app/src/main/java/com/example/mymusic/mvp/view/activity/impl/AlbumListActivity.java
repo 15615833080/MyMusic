@@ -48,6 +48,7 @@ public class AlbumListActivity extends BaseInternetActivity {
     private DataHandlerPresenter dataHandlerPresenter;
     private DataHandlerInternetPresenter dataHandlerInternetPresenter;
     private int currentPosition;
+    private MusicSourceModel.AlbumModel mAlbumModel;
 
 
     @Override
@@ -67,9 +68,8 @@ public class AlbumListActivity extends BaseInternetActivity {
         isPlayList = getIntent().getBooleanExtra(Constant.IS_PLAYLIST, false);
         isHot = getIntent().getBooleanExtra(Constant.IS_MUSIC, false);
         currentPosition = getIntent().getIntExtra(Constant.ALBUM_POSTION, 0);
-        LogUtils.d(TAG, ""+ currentPosition + isAlbum + isHot);
-
-
+        mAlbumModel = getIntent().getBundleExtra(Constant.INTENT_MUSIC_SOURCE).getParcelable(Constant.BUNDLE_MUSIC_SOURCE);
+        LogUtils.d(TAG, ""+ currentPosition + isAlbum + isHot + mAlbumModel);
     }
 
     private void initView() {
@@ -77,11 +77,31 @@ public class AlbumListActivity extends BaseInternetActivity {
 
         albumMusicListAdapter = new AlbumMusicListAdapter(this, null);
         //musicListAdapter = new MusicListAdapter(this, null);
-        dataHandlerInternetPresenter.getAlbumInternet(currentPosition, isAlbum, isHot);
+        //dataHandlerInternetPresenter.getAlbumInternet(currentPosition, isAlbum, isHot);
+        setData();
         //dataHandlerPresenter.getAlbum(mAlbumId, isAlbum, isPlayList, isHot);
         rvList.setLayoutManager(new LinearLayoutManager(this));
         rvList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rvList.setAdapter(albumMusicListAdapter);
+    }
+
+    private void setData() {
+        if (mAlbumModel != null) {
+            Glide.with(this)
+                    .load(mAlbumModel.getPoster())
+                    .into(ivIcon);
+            Glide.with(this)
+                    .load(mAlbumModel.getPoster())
+                    .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
+                    .into(bgIcon);
+            alTitle.setText(mAlbumModel.getTitle());
+            tvInfo.setText(mAlbumModel.getIntro());
+        }
+        List<MusicSourceModel.AlbumModel.ListBeanX> albumMusicList = mAlbumModel.getList();
+        LogUtils.d(TAG, albumMusicList+"");
+        if (albumMusicListAdapter != null && albumMusicList != null) {
+            albumMusicListAdapter.updateInternetAlbumMusic(albumMusicList);
+        }
     }
 
     @Override

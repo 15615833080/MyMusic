@@ -11,5 +11,13 @@ public class Constant {
     public static final String IS_MUSIC = "isHot";
     public static final String ALBUM_POSTION = "albumPosition";
     public static final String HOT_POSTION = "hotPosition";
+    public static final String BUNDLE_MUSIC_SOURCE = "bundleMusicSource";
+    public static final String INTENT_MUSIC_SOURCE = "intentMusicSource";
+    public static final String BUNDLE_ALBUM_MUSIC = "BUNDLE_ALBUM_MUSIC";
+    public static final String INTENT_ALBUM_MUSIC = "INTENT_ALBUM_MUSIC";
+    public static final String BUNDLE_HOT_MUSIC = "BUNDLE_HOT_MUSIC";
+    public static final String INTENT_HOT_MUSIC = "BUNDLE_HOT_MUSIC";
+
+
 
 }

@@ -2,6 +2,7 @@ package com.example.mymusic.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,9 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
                     intent.putExtra(Constant.HOT_POSTION, position);
                     intent.putExtra(Constant.IS_ALBUM, false);
                     intent.putExtra(Constant.IS_MUSIC, true);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(Constant.BUNDLE_HOT_MUSIC, musicBean);
+                    intent.putExtra(Constant.INTENT_HOT_MUSIC, bundle);
                     mContext.startActivity(intent);
                 }
             });
