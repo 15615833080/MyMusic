@@ -29,7 +29,7 @@ public class BaseInternetActivity extends AppCompatActivity implements View.OnCl
 
     private static final String TAG = "BaseInternetActivity";
     private ImageView navBack, navMe;
-    private TextView navTitle;
+    private TextView navTitle, navRecord;
     public InputPresenter inputPresenter;
     public boolean isAlbum;
     public boolean isPlayList;
@@ -52,6 +52,18 @@ public class BaseInternetActivity extends AppCompatActivity implements View.OnCl
         navMe = findViewById(R.id.iv_me);
         navBack.setVisibility(isShowBack ? View.VISIBLE : View.GONE);
         navMe.setVisibility(isShowMe ? View.VISIBLE : View.GONE);
+        navTitle.setText(title);
+        navBack.setOnClickListener(this);
+        navMe.setOnClickListener(this);
+    }
+    public void initNavBar1(boolean isShowBack, String title, boolean isShowMe, boolean isRecord){
+        navBack = findViewById(R.id.iv_back);
+        navTitle = findViewById(R.id.tv_title);
+        navMe = findViewById(R.id.iv_me);
+        navRecord = findViewById(R.id.tv_record);
+        navBack.setVisibility(isShowBack ? View.VISIBLE : View.GONE);
+        navMe.setVisibility((isShowMe && !isRecord) ? View.VISIBLE : View.GONE);
+        navRecord.setVisibility((isRecord && !isShowMe) ? View.VISIBLE : View.GONE);
         navTitle.setText(title);
         navBack.setOnClickListener(this);
         navMe.setOnClickListener(this);

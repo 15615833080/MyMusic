@@ -6,7 +6,9 @@
     android:background="@color/mainColor"
     android:paddingLeft="@dimen/marginSize"
     android:paddingRight="@dimen/marginSize"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <ImageView
         android:id="@+id/iv_back"
@@ -30,5 +32,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
         android:src="@mipmap/me" />
+
+    <TextView
+        android:id="@+id/tv_record"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center_vertical"
+        android:textColor="@android:color/white"
+        android:text="管理"
+        android:textSize="@dimen/navBarTitleSize"
+        />
 
 </FrameLayout>

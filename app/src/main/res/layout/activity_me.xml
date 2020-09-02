@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:background="@drawable/item_commit_select"
-        android:text="个人设置"
+        android:text="播放记录"
         android:paddingLeft="@dimen/marginSize"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

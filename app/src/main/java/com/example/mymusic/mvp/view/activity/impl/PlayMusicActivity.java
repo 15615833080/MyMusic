@@ -13,6 +13,8 @@ import com.example.mymusic.base.BaseInternetActivity;
 import com.example.mymusic.bean.AlbumBean;
 import com.example.mymusic.bean.MusicBean;
 import com.example.mymusic.bean.PlayListBean;
+import com.example.mymusic.bean.RecordBean;
+import com.example.mymusic.helps.RecordHelper;
 import com.example.mymusic.mvp.model.MusicSourceModel;
 import com.example.mymusic.mvp.presenter.DataHandlerInternetPresenter;
 import com.example.mymusic.mvp.presenter.DataHandlerPresenter;
@@ -46,6 +48,7 @@ public class PlayMusicActivity extends BaseInternetActivity {
     private DataHandlerInternetPresenter dataHandlerInternetPresenter;
     private MusicSourceModel.AlbumModel.ListBeanX mMusicBean;
     private MusicSourceModel.HotModel mHotModel;
+    private RecordHelper mRecordHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,15 +67,16 @@ public class PlayMusicActivity extends BaseInternetActivity {
         isAlbum = getIntent().getBooleanExtra(Constant.IS_ALBUM, false);
         isPlayList = getIntent().getBooleanExtra(Constant.IS_PLAYLIST, false);
         isHot = getIntent().getBooleanExtra(Constant.IS_MUSIC, false);
+        mRecordHelper = RecordHelper.getInstance();
         LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot);
 
         //dataHandlerInternetPresenter.getAlbumMusicInternet(hotPosition, isAlbum, isHot);
         //dataHandlerPresenter.getMusicData(musicId);
-        if(isAlbum){
+        if (isAlbum) {
             mMusicBean = getIntent().getBundleExtra(Constant.INTENT_ALBUM_MUSIC).getParcelable(Constant.BUNDLE_ALBUM_MUSIC);
             LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot + "   " + mMusicBean);
             setData();
-        }else if(isHot){
+        } else if (isHot) {
             mHotModel = getIntent().getBundleExtra(Constant.INTENT_HOT_MUSIC).getParcelable(Constant.BUNDLE_HOT_MUSIC);
             LogUtils.d(TAG, "" + hotPosition + isAlbum + isHot + "   " + mHotModel);
             setHotData();
@@ -81,6 +85,7 @@ public class PlayMusicActivity extends BaseInternetActivity {
 
     private void setHotData() {
         if (mHotModel != null) {
+            insert();
             Glide.with(this)
                     .load(mHotModel.getPoster())
                     .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
@@ -95,6 +100,7 @@ public class PlayMusicActivity extends BaseInternetActivity {
 
     private void setData() {
         if (mMusicBean != null) {
+            insert();
             Glide.with(this)
                     .load(mMusicBean.getPoster())
                     .apply(RequestOptions.bitmapTransform(new BlurTransformation(25, 10)))
@@ -107,6 +113,19 @@ public class PlayMusicActivity extends BaseInternetActivity {
 
         }
     }
+
+    private void insert() {
+        RecordBean recordBean = new RecordBean();
+        recordBean.setId(null);
+        recordBean.setMusicId(isHot ? mHotModel.getMusicId() : mMusicBean.getMusicId());
+        recordBean.setAuthor(isHot ? mHotModel.getAuthor() : mMusicBean.getAuthor());
+        recordBean.setName(isHot ? mHotModel.getName() : mMusicBean.getName());
+        recordBean.setPath(isHot ? mHotModel.getPath() : mMusicBean.getPath());
+        recordBean.setPoster(isHot ? mHotModel.getPoster() : mMusicBean.getPoster());
+        mRecordHelper.insert(recordBean);
+    }
+
+
 
     private void initView() {
         //        隐藏statusBar

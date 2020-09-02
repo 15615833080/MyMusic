@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
+import com.example.mymusic.base.BaseInternetActivity;
 import com.example.mymusic.helps.UserHelp;
 import com.example.mymusic.utils.UserUtils;
 
@@ -15,7 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MeActivity extends BaseActivity {
+public class MeActivity extends BaseInternetActivity {
 
     @BindView(R.id.tv_user)
     TextView tvUser;
@@ -33,7 +34,6 @@ public class MeActivity extends BaseActivity {
         ButterKnife.bind(this);
         init();
     }
-
     private void init() {
         initNavBar(true, "个人中心", false);
         tvUser.setText("当前用户：" + UserHelp.getInstance().getPhone());
@@ -46,6 +46,7 @@ public class MeActivity extends BaseActivity {
                 ActivityUtils.startActivity(ChangePasswordActivity.class);
                 break;
             case R.id.person_check:
+                ActivityUtils.startActivity(PlayRecordActivity.class);
                 break;
             case R.id.logout:
                 UserUtils.logout(this);

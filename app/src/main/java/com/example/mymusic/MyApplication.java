@@ -3,6 +3,7 @@ package com.example.mymusic;
 import android.app.Application;
 
 import com.blankj.utilcode.util.Utils;
+import com.example.mymusic.greendao.DaoManager;
 import com.example.mymusic.helps.RealmHelp;
 
 import io.realm.Realm;
@@ -19,6 +20,8 @@ public class MyApplication extends Application {
         myApplication = this;
         Utils.init(this);
         Realm.init(this);
+        DaoManager.getInstance().init(this);
+        DaoManager.getInstance().getDaoMaster();
         //RealmHelp.migraiton();
     }
 }
