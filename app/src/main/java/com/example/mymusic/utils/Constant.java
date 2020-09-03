@@ -17,6 +17,8 @@ public class Constant {
     public static final String INTENT_ALBUM_MUSIC = "INTENT_ALBUM_MUSIC";
     public static final String BUNDLE_HOT_MUSIC = "BUNDLE_HOT_MUSIC";
     public static final String INTENT_HOT_MUSIC = "BUNDLE_HOT_MUSIC";
+    public static final String HOT_MODEL_LIST = "hotModelList";
+
 
 
 

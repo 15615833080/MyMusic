@@ -19,7 +19,7 @@ import com.example.mymusic.utils.UserUtils;
 import java.lang.ref.WeakReference;
 
 
-public class SplashActivity extends BaseInternetActivity {
+public class SplashActivity extends BaseActivity {
 
     private static final String TAG = "SplashActivity";
     //倒计时标记
@@ -39,7 +39,6 @@ public class SplashActivity extends BaseInternetActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         timeText = findViewById(R.id.time_text);
-
         //intData1();
         initData2();
         //initData3();

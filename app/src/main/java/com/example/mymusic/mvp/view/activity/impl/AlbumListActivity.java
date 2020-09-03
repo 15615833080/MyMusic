@@ -62,7 +62,7 @@ public class AlbumListActivity extends BaseInternetActivity {
 
     private void initData() {
         //dataHandlerPresenter = new DataHandlerPresenterImpl(this, this);
-        dataHandlerInternetPresenter = new DataHandlerInternetPresenterImpl(this, this);
+        //dataHandlerInternetPresenter = new DataHandlerInternetPresenterImpl(this, this);
         mAlbumId = getIntent().getStringExtra(Constant.ALBUM_ID);
         isAlbum = getIntent().getBooleanExtra(Constant.IS_ALBUM, false);
         isPlayList = getIntent().getBooleanExtra(Constant.IS_PLAYLIST, false);
@@ -106,6 +106,7 @@ public class AlbumListActivity extends BaseInternetActivity {
 
     @Override
     public void updateInterentAlbumIntro(MusicSourceModel.AlbumModel albumModel) {
+        LogUtils.d(TAG, "1111");
         if (albumModel != null) {
             Glide.with(this)
                     .load(albumModel.getPoster())

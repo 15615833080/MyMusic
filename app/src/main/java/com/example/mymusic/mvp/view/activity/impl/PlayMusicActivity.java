@@ -62,7 +62,7 @@ public class PlayMusicActivity extends BaseInternetActivity {
 
     private void initData() {
         //dataHandlerPresenter = new DataHandlerPresenterImpl(this, this);
-        dataHandlerInternetPresenter = new DataHandlerInternetPresenterImpl(this, this);
+        //dataHandlerInternetPresenter = new DataHandlerInternetPresenterImpl(this, this);
         hotPosition = getIntent().getIntExtra(Constant.HOT_POSTION, -1);
         isAlbum = getIntent().getBooleanExtra(Constant.IS_ALBUM, false);
         isPlayList = getIntent().getBooleanExtra(Constant.IS_PLAYLIST, false);

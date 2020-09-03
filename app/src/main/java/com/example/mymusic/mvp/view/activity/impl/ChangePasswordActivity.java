@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
+import com.example.mymusic.base.BaseInternetActivity;
 import com.example.mymusic.mvp.presenter.impl.InputPresenterImpl;
 import com.example.mymusic.mvp.view.views.InputView;
 
@@ -14,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ChangePasswordActivity extends BaseActivity {
+public class ChangePasswordActivity extends BaseInternetActivity {
 
     @BindView(R.id.input_old_password)
     InputView inputOldPassword;

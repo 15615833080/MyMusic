@@ -62,5 +62,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.1.4'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
-    implementation 'org.greenrobot:greendao:3.2.2' // 添加库
+    implementation 'org.greenrobot:greendao:3.2.2'// 添加库
+    implementation 'com.google.android.material:material:1.2.0'
+
 }

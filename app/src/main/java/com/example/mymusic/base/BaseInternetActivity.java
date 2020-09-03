@@ -31,12 +31,20 @@ public class BaseInternetActivity extends AppCompatActivity implements View.OnCl
     private ImageView navBack, navMe;
     private TextView navTitle, navRecord;
     public InputPresenter inputPresenter;
+    public DataHandlerInternetPresenter dataHandlerInternetPresenter;
     public boolean isAlbum;
     public boolean isPlayList;
     public boolean isHot;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataHandlerInternetPresenter = DataHandlerInternetPresenterImpl.getInstance();
+        DataHandlerInternetPresenterImpl.getInstance().init(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     /**

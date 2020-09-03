@@ -30,7 +30,7 @@ public class LogUtils {
             StackTraceElement ste = new Throwable().getStackTrace()[stackIndex];
             String log = build(msg, ste);
 //            Log.d(logKey, log);
-            Log.d(TAG, "[" + logKey + "]" + log);
+            Log.d(TAG + Thread.currentThread().getName(), "[" + logKey + "]" + log);
             if (sOpenLogToFile) {
                 writeToFile(log);
             }

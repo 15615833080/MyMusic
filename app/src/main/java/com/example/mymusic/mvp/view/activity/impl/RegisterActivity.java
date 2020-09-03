@@ -7,6 +7,7 @@ import android.widget.Button;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
+import com.example.mymusic.base.BaseInternetActivity;
 import com.example.mymusic.mvp.presenter.impl.InputPresenterImpl;
 import com.example.mymusic.mvp.view.views.InputView;
 
@@ -14,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseInternetActivity {
 
     @BindView(R.id.register_phone)
     InputView registerPhone;

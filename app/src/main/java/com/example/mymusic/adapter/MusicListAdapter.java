@@ -50,8 +50,10 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        setRecyclerViewHeight();
         if (hotModelList != null) {
+            if(mRv != null){
+                setRecyclerViewHeight();
+            }
             final MusicSourceModel.HotModel musicBean = hotModelList.get(position);
             Glide.with(mContext)
                     .load(musicBean.getPoster())
