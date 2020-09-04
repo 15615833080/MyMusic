@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RegisterActivity extends BaseInternetActivity {
+public class RegisterActivity extends BaseActivity {
 
     @BindView(R.id.register_phone)
     InputView registerPhone;

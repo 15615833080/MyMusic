@@ -7,10 +7,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.util.LogTime;
 import com.example.mymusic.R;
@@ -24,6 +26,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemLongClick;
 
 public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.ViewHolder> implements SlidingButtonView.IonSlidingButtonListener {
     private static final String TAG = "RecordListAdapter";
@@ -67,7 +70,19 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
             holder.tvNewsTypeName.setText(recordBean.getAuthor());
             holder.layoutContent.getLayoutParams().width = UtilsHelper.getScreenWidth(
                     mContext);
-/*            holder.layoutContent.setOnClickListener(new View.OnClickListener() {
+            holder.layoutContent.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    if(menuIsOpen()){
+                        closeMenu();
+                    }else {
+                        int n = holder.getLayoutPosition();
+                        mIDeleteBtnClickListener.onItemLongClick(view, n);
+                    }
+                    return true;
+                }
+            });
+            /*holder.layoutContent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     //判断是否有删除菜单打开
@@ -75,7 +90,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
                         closeMenu();//关闭菜单
                     } else {
                         int n = holder.getLayoutPosition();
-                        mIDeleteBtnClickListener.onItemClick(v, n);
+                        mIDeleteBtnClickListener.onItemLongClick(v, n);
                     }
                 }
             });*/
@@ -156,8 +171,13 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         mRecordList.remove(position);
         notifyItemRemoved(position);
     }
+    public void reMoveDataAll(){
+        mRecordList.clear();
+        notifyDataSetChanged();
+    }
 
     public interface IonSlidingViewClickListener {
+        void onItemLongClick(View view, int position);
         void onDeleteBtnCilck(View view, int position);
     }
 

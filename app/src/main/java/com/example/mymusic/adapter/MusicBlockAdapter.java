@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mymusic.R;
 import com.example.mymusic.mvp.model.MusicSourceModel;
+import com.example.mymusic.mvp.view.activity.impl.AlbumActivity;
 import com.example.mymusic.mvp.view.activity.impl.RankActivity;
 import com.example.mymusic.utils.Constant;
 import com.example.mymusic.utils.LogUtils;
@@ -48,8 +49,16 @@ public class MusicBlockAdapter extends RecyclerView.Adapter<MusicBlockAdapter.Vi
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        LogUtils.d(TAG, "111");
                         Intent intent = new Intent(mContext, RankActivity.class);
+                        mContext.startActivity(intent);
+                    }
+                });
+            }else if(position == 1){
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        LogUtils.d(TAG, "111");
+                        Intent intent = new Intent(mContext, AlbumActivity.class);
                         mContext.startActivity(intent);
                     }
                 });

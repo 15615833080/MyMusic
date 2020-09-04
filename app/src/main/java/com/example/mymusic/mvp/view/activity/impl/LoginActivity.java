@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseInternetActivity {
+public class LoginActivity extends BaseActivity {
 
     private static final String TAG = "LoginActivity";
     @BindView(R.id.login_phone)

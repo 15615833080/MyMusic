@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.view.activity.impl.RankActivity"></activity>
+        <activity android:name=".mvp.view.activity.impl.AlbumActivity"></activity>
+        <activity android:name=".mvp.view.activity.impl.RankActivity" />
         <activity android:name=".mvp.view.activity.impl.PlayRecordActivity" />
 
         <service

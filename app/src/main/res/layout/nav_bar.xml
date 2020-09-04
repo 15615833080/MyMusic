@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right|center_vertical"
         android:textColor="@android:color/white"
-        android:text="管理"
+        android:text="取消"
         android:textSize="@dimen/navBarTitleSize"
         />
 

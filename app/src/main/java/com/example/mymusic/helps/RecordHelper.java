@@ -54,4 +54,12 @@ public class RecordHelper {
 
     }
 
+    /**
+     * 删除全部数据
+     * @param
+     */
+    public void deleteAll() {
+        recordBeanDao.deleteAll();
+
+    }
 }

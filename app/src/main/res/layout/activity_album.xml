@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvp.view.activity.impl.RankActivity">
+    tools:context=".mvp.view.activity.impl.AlbumActivity">
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
     <include
-        android:id="@+id/include4"
+        android:id="@+id/include5"
         layout="@layout/nav_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,25 +18,27 @@
         app:layout_constraintTop_toBottomOf="parent" />
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
+        android:id="@+id/album_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include4"
+        app:layout_constraintTop_toBottomOf="@+id/include5"
         app:layout_constraintVertical_bias="0.0"
         app:tabMode="fixed"
         app:tabIndicatorColor="#F5F246"
         app:tabBackground="@color/mainColor"></com.google.android.material.tabs.TabLayout>
 
-    <com.example.mymusic.mvp.view.views.CustomViewPager
-        android:id="@+id/view_pager"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tabs" />
+        app:layout_constraintTop_toBottomOf="@+id/album_tabs"
+        />
 </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
