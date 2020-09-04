@@ -8,4 +8,5 @@ public interface DataHandlerInternetPresenter {
     void getAlbumMusicInternet(int currentPostion, boolean isAlbum, boolean isHot);
     void get();
     void dsetroy();
+    void getMusicSourceInternet();
 }

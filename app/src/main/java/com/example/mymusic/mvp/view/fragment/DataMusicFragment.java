@@ -30,6 +30,7 @@ public class DataMusicFragment extends Fragment {
     private Context mContext;
     private MusicSourceModel musicSourceModel;
 
+    public DataMusicFragment(){}
     public DataMusicFragment(Context context) {
         mContext = context;
     }
@@ -67,9 +68,9 @@ public class DataMusicFragment extends Fragment {
     }
 
     private void initViews() {
-        mMusicListAdapter = new MusicListAdapter(mContext, null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL));
+        mMusicListAdapter = new MusicListAdapter(getContext(), null);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), 1));
         recyclerView.setAdapter(mMusicListAdapter);
     }
 

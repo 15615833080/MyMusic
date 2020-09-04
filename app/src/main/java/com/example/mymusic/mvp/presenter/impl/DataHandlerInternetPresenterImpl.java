@@ -23,6 +23,7 @@ public class DataHandlerInternetPresenterImpl implements DataHandlerInternetPres
     private MusicSourceModel mMusicSourceModel;
     //多线程中要被共享的使用volatile关键字修饰
     private static DataHandlerInternetPresenterImpl mInstance;
+
     /**
      * 获取单例
      */
@@ -37,14 +38,15 @@ public class DataHandlerInternetPresenterImpl implements DataHandlerInternetPres
         }
         return mInstance;
     }
+
     private DataHandlerInternetPresenterImpl() {
     }
 
-    public void init(Context context){
-        mContext = context;
+    public void init() {
         setMusicSourceModel.getMusicSourceInternet();
     }
-    public void initShowDataView(ShowInternetDataView showInternetDataView){
+
+    public void initShowDataView(ShowInternetDataView showInternetDataView) {
         this.showInternetDataView = showInternetDataView;
     }
 /*    public DataHandlerInternetPresenterImpl(Context context, ShowInternetDataView showInternetDataView) {
@@ -53,14 +55,19 @@ public class DataHandlerInternetPresenterImpl implements DataHandlerInternetPres
     }*/
 
     @Override
+    public void getMusicSourceInternet() {
+        if (mMusicSourceModel != null) {
+            /*showInternetDataView.updateInternetAlbum(mMusicSourceModel.getAlbum());
+            showInternetDataView.updateInternetHot(mMusicSourceModel.getHot());*/
+            showInternetDataView.passMusicSource(mMusicSourceModel);
+        }
+    }
+
+    @Override
     public void setMusicSourceInternet(MusicSourceModel musicSourceModel) {
-        LogUtils.d(TAG, musicSourceModel + "");
         mMusicSourceModel = musicSourceModel;
         LogUtils.d(TAG, mMusicSourceModel + "");
-        if (mMusicSourceModel != null) {
-            showInternetDataView.updateInternetAlbum(mMusicSourceModel.getAlbum());
-            showInternetDataView.updateInternetHot(mMusicSourceModel.getHot());
-        }
+
     }
 
     @Override

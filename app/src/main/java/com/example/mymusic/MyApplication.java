@@ -5,6 +5,7 @@ import android.app.Application;
 import com.blankj.utilcode.util.Utils;
 import com.example.mymusic.greendao.DaoManager;
 import com.example.mymusic.helps.RealmHelp;
+import com.example.mymusic.mvp.presenter.impl.DataHandlerInternetPresenterImpl;
 
 import io.realm.Realm;
 
@@ -23,5 +24,8 @@ public class MyApplication extends Application {
         DaoManager.getInstance().init(this);
         DaoManager.getInstance().getDaoMaster();
         //RealmHelp.migraiton();
+    }
+    public void initData(){
+        DataHandlerInternetPresenterImpl.getInstance().init();
     }
 }

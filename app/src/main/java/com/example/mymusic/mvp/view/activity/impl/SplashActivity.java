@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.widget.TextView;
 
+import com.example.mymusic.MyApplication;
 import com.example.mymusic.R;
 import com.example.mymusic.base.BaseActivity;
 import com.example.mymusic.base.BaseInternetActivity;
@@ -19,7 +20,7 @@ import com.example.mymusic.utils.UserUtils;
 import java.lang.ref.WeakReference;
 
 
-public class SplashActivity extends BaseActivity {
+public class SplashActivity extends BaseInternetActivity {
 
     private static final String TAG = "SplashActivity";
     //倒计时标记
@@ -39,6 +40,7 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         timeText = findViewById(R.id.time_text);
+        MyApplication.getInstance().initData();
         //intData1();
         initData2();
         //initData3();
@@ -166,12 +168,4 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //闪屏页销毁时将消息对象从消息队列移除并结束倒计时
-        //myHandler.removeCallbacksAndMessages(1);
-        //myCountDownTimer.cancel();
-        LogUtils.d("tag","destory");
-    }
 }

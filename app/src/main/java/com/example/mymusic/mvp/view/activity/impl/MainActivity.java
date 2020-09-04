@@ -2,12 +2,15 @@ package com.example.mymusic.mvp.view.activity.impl;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mymusic.MyApplication;
 import com.example.mymusic.R;
 import com.example.mymusic.adapter.MusicBlockAdapter;
 import com.example.mymusic.adapter.MusicGridAdapter;
@@ -18,6 +21,7 @@ import com.example.mymusic.mvp.presenter.DataHandlerInternetPresenter;
 import com.example.mymusic.mvp.presenter.DataHandlerPresenter;
 import com.example.mymusic.mvp.presenter.impl.DataHandlerInternetPresenterImpl;
 import com.example.mymusic.mvp.view.views.GridSpaceItemDecoration;
+import com.example.mymusic.utils.Constant;
 import com.example.mymusic.utils.LogUtils;
 
 import java.util.List;
@@ -36,25 +40,48 @@ public class MainActivity extends BaseInternetActivity {
     RecyclerView rvList;
     private MusicGridAdapter mGridAdapter;
     private MusicListAdapter mListAdapter;
+    private List<MusicSourceModel.AlbumModel> mAlbumModelList;
     private DataHandlerPresenter dataHandlerPresenter;
     private MusicBlockAdapter mMusicBlockAdapter;
     private List<MusicSourceModel.HotModel> mHotModelList;
+    private MusicSourceModel mMusicSourceModel;
     private String[] blockTitle ={"每日推荐", "歌单", "排行榜", "电台", "直播"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(savedInstanceState != null){
+            mMusicSourceModel = savedInstanceState.getParcelable(Constant.BUNDLE_MUSIC_SOURCE);
+            LogUtils.d(TAG, "11111" + mMusicSourceModel);
+        }
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
         initData();
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(Constant.BUNDLE_MUSIC_SOURCE, mMusicSourceModel);
+    }
+
+/*    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        LogUtils.d(TAG, "22222");
+    }*/
+
     private void initData() {
         //dataHandlerPresenter = new DataHandlerPresenterImpl(this, this);
         //dataHandlerInternetPresenter = new DataHandlerInternetPresenterImpl(this, this, 1);
         DataHandlerInternetPresenterImpl.getInstance().initShowDataView(this);
+        dataHandlerInternetPresenter.getMusicSourceInternet();
         mMusicBlockAdapter.setData(blockTitle, mHotModelList);
+        if(mMusicSourceModel != null){
+            mGridAdapter.updateInternet(mMusicSourceModel.getAlbum());
+            mListAdapter.updateInternet(mMusicSourceModel.getHot());
+        }
         //dataHandlerPresenter.getAlbum();
         //dataHandlerPresenter.getHotData();
 //        dataHandlerInternetPresenter.getHotInternet();
@@ -92,22 +119,28 @@ public class MainActivity extends BaseInternetActivity {
         rvList.setAdapter(mListAdapter);
     }
 
-    @Override
+   /* @Override
     public void updateInternetAlbum(List<MusicSourceModel.AlbumModel> albumModelList) {
         LogUtils.d(TAG, "mGridAdapter" + mGridAdapter + albumModelList);
         if (mGridAdapter != null && albumModelList != null) {
+            mAlbumModelList = albumModelList;
             mGridAdapter.updateInternet(albumModelList);
         }
-    }
+    }*/
 
     @Override
+    public void passMusicSource(MusicSourceModel musicSourceModel) {
+        mMusicSourceModel = musicSourceModel;
+    }
+
+   /* @Override
     public void updateInternetHot(List<MusicSourceModel.HotModel> hotModelList) {
         LogUtils.d(TAG, "mGridAdapter" + hotModelList);
         if (mListAdapter != null && hotModelList != null) {
             mHotModelList = hotModelList;
             mListAdapter.updateInternet(hotModelList);
         }
-    }
+    }*/
 
     /*@Override
     public void updateAlbum(List<AlbumBean> albumBeanList) {

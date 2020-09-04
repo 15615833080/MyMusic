@@ -39,7 +39,6 @@ public class BaseInternetActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataHandlerInternetPresenter = DataHandlerInternetPresenterImpl.getInstance();
-        DataHandlerInternetPresenterImpl.getInstance().init(this);
     }
 
     @Override
