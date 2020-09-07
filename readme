@@ -1,4 +1,5 @@
 使用MVP模式
+实现倒计时加载--使用弱引用
 使用realm数据库
 整合rxjava和retrofit框架从服务器获取json数据
 使用mediaplayer播放音乐
